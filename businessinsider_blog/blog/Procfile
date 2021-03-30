@@ -1,0 +1,1 @@
+web: gunicorn businessinsider_blog.wsgi --log-file -

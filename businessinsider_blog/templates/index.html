@@ -1,0 +1,173 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% include "nav.html" %}
+    <main>
+        <div class="">
+            <section class="sec-1">
+                <div class="top-stories">
+                    <div class="title">
+                        <h1>top stories</h1>
+                        <hr>
+                    </div>
+                    <a href="{% url 'news' first_post.slug %}">
+                        <div class="diff">
+                        <img src="{{first_post.post_image.url}}" alt="">
+                            <div  class="diff-a" style="background-image: url({{first_post.post_image.url}}); background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
+                            <div  class="diff-b">
+                                <h2>
+                                    {{ first_post.post_title|title }}
+                                </h2>
+                                <p>
+                                    {{ first_post.post_body|truncatewords:50 }}
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                    {% for others in other_posts %}
+                        <a href="{% url 'news' others.slug %}">
+                            <div class="after-title">
+                                <div class="after-title-1" style="background-image: url({{others.post_image}}); background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
+                                <div class="after-title-2">
+                                    <h2>
+                                        {{ others.post_title }}
+                                    </h2>
+                                    <p>
+                                        {{ others.post_body|truncatewords:15 }}
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+                <div class="latest">
+                    <div class="title">
+                        <h1>latest</h1>
+                        <hr>
+                    </div>
+                    <div class="a">
+                        {% for late in latest_post %}
+                            <div class="tog">
+                                <div class="img"></div>
+                                <div>
+                                    <h2>
+                                        {{ late.post_title }}
+                                    </h2>
+                                    <p>
+                                        Published {{late.publish.date}} at {{late.publish.time}}
+                                    </p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="markets">
+                    <div class="title a">
+                        <h1>markets</h1>
+                        <hr>
+                        <a href="{% url 'categories' 'markets' %}">read more>></a>
+                    </div>
+                        {% for news in market_post %}
+                            <a href="{% url 'stories' 'markets' news.slug %}">
+                                <div class="after-title">
+                                    <div class="after-title-1"></div>
+                                    <div class="after-title-2">
+                                        <h2>
+                                            {{ news.post_title }}
+                                        </h2>
+                                        {% comment %} <p>
+                                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque ecusandae, ducimus, excepturi facer...
+                                        </p> {% endcomment %}
+                                    </div>
+                                </div>
+                            </a>
+                        {% endfor %}
+                </div>
+                <div class="leaders">
+                    <div class="title a">
+                        <h1>leaders</h1>
+                        <hr>
+                        <a href="{% url 'categories' 'leaders' %}">read more>></a>
+                    </div>
+                        {% for lead in leader_post %}
+                            <a href="{% url 'stories' 'leader' lead.slug %}">
+                                <div class="after-title">
+                                    <div class="after-title-1"></div>
+                                    <div class="after-title-2">
+                                        <h2>
+                                            {{ lead.post_title }}
+                                        </h2>
+                                        {% comment %} <p>
+                                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque ecusandae, ducimus, excepturi facer...
+                                        </p> {% endcomment %}
+                                    </div>
+                                </div>
+                            </a>
+                        {% endfor %}
+                </div>
+                <div class="careers">
+                    <div class="title a">
+                        <h1>careers</h1>
+                        <hr>
+                        <a href="{% url 'categories' 'careers' %}">read more>></a>
+                    </div>
+                    {% for carr in career_post %}
+                        <a href="{% url 'stories' 'careers' carr.slug %}">
+                            <div class="after-title">
+                                <div class="after-title-1"></div>
+                                <div class="after-title-2">
+                                    <h2>
+                                        {{ carr.post_title }}
+                                    </h2>
+                                    {% comment %} <p>
+                                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque ecusandae, ducimus, excepturi facer...
+                                    </p> {% endcomment %}
+                                </div>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+                <div class="lifestyle">
+                    <div class="title a">
+                        <h1>lifestyle</h1>
+                        <hr>
+                        <a href="{% url 'categories' 'lifestyle' %}">read more>></a>
+                    </div>
+                    {% for life in lifestyle_post %}
+                        <a href="{% url 'stories' 'lifestyle' life.slug %}">
+                            <div class="after-title">
+                                <div class="after-title-1"></div>
+                                <div class="after-title-2">
+                                    <h2>
+                                        {{ life.post_title }}
+                                    </h2>
+                                    {% comment %} <p>
+                                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Cumque ecusandae, ducimus, excepturi facer...
+                                    </p> {% endcomment %}
+                                </div>
+                            </div>
+                        </a>
+                    {% endfor %}
+                </div>
+            </section>
+            <section class="sec-2">
+                <h1>trending</h1>
+                {% for trend in trend_post %}
+                    <a href="{% url 'story_new' trend.slug %}"><div>
+                        <div style="background-image: url({{trend.post_image.url}}); background-position: center; background-size: cover; background-repeat: no-repeat;"></div>
+                        <h2>{{ trend.post_title }}</h2>
+                    </div></a>
+                {% endfor %}
+            </section>
+        </div>
+    </main>
+    {% include "footer.html" %}
+</body>
+</html>

@@ -1,0 +1,25 @@
+{% extends 'category.html' %}
+{% block first_section %}
+    <div class="diff" style="margin-top: 80px;">
+    {% if s_post %}
+        {% for pst in s_post %}
+            <a href="{% url 'stories' pst.category_id pst.slug %}">
+                <div  class="diff-b">
+                    <h2>
+                        {{ pst.post_title}}
+                    </h2>
+                    <p>
+                        {{ pst.post_body|truncatewords:50 }}                           
+                    </p>
+                </div>
+            </a>
+        {% endfor %}
+    {% else %}
+        <div  class="diff-b">
+            <p>
+                No result for this search                          
+            </p>
+        </div>
+    {% endif %}
+    </div>
+{% endblock first_section %}

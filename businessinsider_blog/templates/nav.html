@@ -1,0 +1,21 @@
+{% load static %}
+<header>
+    <nav>
+        <div>
+            <a href="{% url 'homepage' %}" class="logo"><b>business<br>insider</b><br>africa</a>
+            <ul>
+            {% for cat in categ %}
+                <a href="{% url 'categories' cat.category_name %}">{{ cat.category_name|upper }}</a>
+            {% endfor %}
+            </ul>
+            <form action="{% url 'search' %}" method='post'>
+            {% csrf_token %}
+                <table>
+                    {{ s_form.as_p }}
+                </table>
+                <button class="logo search"><b>search</b></button>
+            </form>
+            <a href="" class="logo"><b>wg</b></a>
+        </div>
+    </nav>
+</header>

@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% include "nav.html" %}
+    <main>
+        <div class="">
+            {% block first_section %}
+            <section class="sec-1">
+                <div class="top-stories">
+                    <div class="title">
+                        <h1>{{ url_cat }}</h1>
+                        <hr class="ll">
+                    </div>
+                    <div class="diff">
+                        <a href="{% url 'stories' first_post.category_id first_post.slug %}">
+                            <div  class="diff-a"></div>
+                            <div  class="diff-b">
+                                <h2>
+                                    {{ first_post.post_title}}
+                                </h2>
+                                <p>
+                                    {{ first_post.post_body|truncatewords:50 }}                                 
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="rec-post">
+                        {% for pp in post %}
+                            <div class="tog">
+                                <a href="{% url 'stories' pp.category_id pp.slug %}">
+                                    <div class="img"></div>
+                                    <div>
+                                        <h2>
+                                            {{ pp.post_title }}
+                                        </h2>
+                                        <p>
+                                            Published on {{ pp.publish.date }} at {{ pp.publish.time}}
+                                        </p>
+                                    </div>
+                                </a>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    {% if post.has_next %}
+                        <div class="show-more-cat">
+                            <p><a href="?page={{ post.next_page_number }}">SHOW MORE >></a></p>
+                        </div>
+                    {% elif post.has_previous %}
+                        <div class="show-more-cat">
+                            <p><a href="?page={{ post.previous_page_number }}"><< PREVIOUS</a></p>
+                        </div>
+                    {% endif %}
+                </div>
+            </section>
+            {% endblock first_section %}
+        </div>
+    </main>
+    {% include "footer.html" %}
+</body>
+</html>

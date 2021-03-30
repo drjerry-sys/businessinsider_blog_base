@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'css/bootstrap4/css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ post.post_title }}</title>
+</head>
+<body>
+    {% include "nav.html" %}
+    <main>
+        <div class="">
+            <section class="sec-1">
+                <a href="" class="news">{{ group|title }}</a>
+                <h1 class="story-sec-1">{{ post.post_title }}</h1>
+                <p class="datePublish">{{ post.publish }}</p>
+                <h5 class="datePublish datePublish-modified">Tell your friends</h5>
+                <a href="" class="social-md">Facebook</a>
+                <a href="" class="social-md">Twitter</a>
+                <a href="" class="social-md">Email</a>
+                <p class="written">{{ post.post_body }}</p>
+                <div class="newsletter">
+                    <div class="join">
+                        <h2 align="center">Join the "BI" </h2>
+                        <h2 align="center">Newsletter</h2>
+                        <p align="center">Join 10,000 others, get the latest African business trends, profiles and news straight to your inbox
+                        </p>
+                    </div>
+                    <div class="update row">
+                        <button type="button" class="btn btn-primary btn-block" style="margin-top: 100px" data-toggle="modal" data-target="#myModal">SEND ME UPDATES</button>
+                    </div>
+                    <a href="" style="margin-right: 10px;" class="like">Like Business Insider Africa</a>
+                    <a href="" class="follow">Follow Business Insider Africa</a>
+                </div>
+                <div class="comment-div">
+                <p class="success">{{ all_comment.count }} comment</p>
+                    {% for i in all_comment %}
+                    <div class="card">
+                        <h4 class=""><small> Comment by</small> {{ i.comment_name }}<small> on {{ i.created }} </small></h4>
+                        <p class="info">{{ i.comment_message }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% if success %}
+                    <p class="alert alert-success">comment successfully created</p>
+                {% endif %}
+                <form action="" class="form-group" method="POST">
+                    {% csrf_token %}
+                    <table class="table">
+                        {{ comment_to_temp.as_table }}
+                    </table>
+                        <button class="btn btn-success mx-auto">Submit</button>
+                </form>
+                {% if similar_posts %}
+                    <div class="title rec">
+                        <h1>recommended articles</h1>
+                        <hr>
+                    </div>
+                    <div class="rec-post">
+                        {% for similar in similar_posts %}
+                            <div class="tog">
+                                <div class="img"></div>
+                                <div>
+                                    <h2>
+                                        {{ similar.post_title }}
+                                    </h2>
+                                    <p>
+                                        Published {{ similar.publish.date }} at {{ similar.publish.time }}
+                                    </p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </section>
+            <section class="sec-2">
+                {% if trend_post %}
+                    <h1>trending</h1>
+                    {% for pst in trend_post %}
+                        <a href="{% url 'story_new' pst.slug %}"><div>
+                            <div></div>
+                            <h2>{{ pst.post_title }}</h2>
+                        </div></a>
+                    {% endfor %}
+                {% endif %}
+            </section>
+        </div>
+    </main>
+    {% include "footer.html" %}
+</body>
+</html>
